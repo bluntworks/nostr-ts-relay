@@ -1,34 +1,34 @@
-# [nostr-ts-relay](https://github.com/Cameri/nostr-ts-relay)
+# [nostream](https://github.com/Cameri/nostream)
 
 <p align="center">
-  <img alt="nostr-ts-relay logo" height="256px" width="256px" src="https://user-images.githubusercontent.com/378886/198158439-86e0345a-adc8-4efe-b0ab-04ff3f74c1b2.jpg" />
+  <img alt="nostream logo" height="256px" width="256px" src="https://user-images.githubusercontent.com/378886/198158439-86e0345a-adc8-4efe-b0ab-04ff3f74c1b2.jpg" />
 </p>
 
 <p align="center">
-  <a href="https://github.com/Cameri/nostr-ts-relay/releases">
-    <img alt="GitHub release" src="https://img.shields.io/github/v/release/Cameri/nostr-ts-relay">
+  <a href="https://github.com/Cameri/nostream/releases">
+    <img alt="GitHub release" src="https://img.shields.io/github/v/release/Cameri/nostream">
   </a>
-  <a href="https://github.com/Cameri/nostr-ts-relay/issues">
-    <img alt="GitHub issues" src="https://img.shields.io/github/issues/Cameri/nostr-ts-relay?style=plastic" />
+  <a href="https://github.com/Cameri/nostream/issues">
+    <img alt="GitHub issues" src="https://img.shields.io/github/issues/Cameri/nostream?style=plastic" />
   </a>
-  <a href="https://github.com/Cameri/nostr-ts-relay/stargazers">
-    <img alt="GitHub stars" src="https://img.shields.io/github/stars/Cameri/nostr-ts-relay" />
+  <a href="https://github.com/Cameri/nostream/stargazers">
+    <img alt="GitHub stars" src="https://img.shields.io/github/stars/Cameri/nostream" />
   </a>
-  <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/Cameri/nostr-ts-relay">
-  <a href="https://github.com/Cameri/nostr-ts-relay/network">
-    <img alt="GitHub forks" src="https://img.shields.io/github/forks/Cameri/nostr-ts-relay" />
+  <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/Cameri/nostream">
+  <a href="https://github.com/Cameri/nostream/network">
+    <img alt="GitHub forks" src="https://img.shields.io/github/forks/Cameri/nostream" />
   </a>
-  <a href="https://github.com/Cameri/nostr-ts-relay/blob/main/LICENSE">
-    <img alt="GitHub license" src="https://img.shields.io/github/license/Cameri/nostr-ts-relay" />
+  <a href="https://github.com/Cameri/nostream/blob/main/LICENSE">
+    <img alt="GitHub license" src="https://img.shields.io/github/license/Cameri/nostream" />
   </a>
-  <a href='https://coveralls.io/github/Cameri/nostr-ts-relay?branch=main'>
-    <img  alt='Coverage Status' src='https://coveralls.io/repos/github/Cameri/nostr-ts-relay/badge.svg?branch=main' />
+  <a href='https://coveralls.io/github/Cameri/nostream?branch=main'>
+    <img  alt='Coverage Status' src='https://coveralls.io/repos/github/Cameri/nostream/badge.svg?branch=main' />
   </a>
   <a href='https://sonarcloud.io/project/overview?id=Cameri_nostr-ts-relay'>
-    <img alt='Sonarcloud quality gate' src='https://sonarcloud.io/api/project_badges/measure?project=Cameri_nostr-ts-relay&metric=alert_status' />
+    <img alt='Sonarcloud quality gate' src='https://sonarcloud.io/api/project_badges/measure?project=Cameri_nostr&metric=alert_status' />
   </a>
-  <a href='https://github.com/Cameri/nostr-ts-relay/actions'>
-    <img alt='Build status' src='https://github.com/Cameri/nostr-ts-relay/actions/workflows/checks.yml/badge.svg?branch=main&event=push' />
+  <a href='https://github.com/Cameri/nostream/actions'>
+    <img alt='Build status' src='https://github.com/Cameri/nostream/actions/workflows/checks.yml/badge.svg?branch=main&event=push' />
   </a>
 </p>
 
@@ -37,9 +37,9 @@ Typescript.
 
 This implementation is production-ready. See below for supported features.
 
-The project master repository is available on [GitHub](https://github.com/Cameri/nostr-ts-relay).
+The project master repository is available on [GitHub](https://github.com/Cameri/nostream).
 
-[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template/BWx8DY?referralCode=qVdmfO)
+[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template/Xfk5F7?referralCode=Kfv2ly)
 
 ## Features
 
@@ -57,6 +57,7 @@ NIPs with a relay-specific implementation are listed here.
 - [x] NIP-20: Command Results
 - [x] NIP-22: Event `created_at` Limits
 - [x] NIP-26: Delegated Event Signing
+- [x] NIP-28: Public Chat
 - [x] NIP-33: Parameterized Replaceable Events
 
 ## Requirements
@@ -68,9 +69,11 @@ NIPs with a relay-specific implementation are listed here.
 - Typescript
 
 ### Docker setups
-- Node v18
 - Docker v20.10
 - Docker compose v2.10
+
+WARNING: Docker distributions from Snap, Brew or Debian repositories are NOT SUPPORTED and will result in errors.
+Install Docker from their [official guide](https://docs.docker.com/engine/install/) ONLY.
 
 ## Full Guide
 
@@ -83,8 +86,8 @@ You may have to uninstall Docker if you installed it using a different guide.
 
 Clone repository and enter directory:
   ```
-  git clone git@github.com:Cameri/nostr-ts-relay.git
-  cd nostr-ts-relay
+  git clone git@github.com:Cameri/nostream.git
+  cd nostream
   ```
 
 Start:
@@ -106,6 +109,48 @@ Print the Tor hostname:
   ./scripts/print_tor_hostname
   ```
 
+### Running as a Service
+
+By default this server will run continuously until you stop it with Ctrl+C or until the system restarts.
+
+You can [install as a systemd service](https://www.swissrouting.com/nostr.html#installing-as-a-service) if you want the server to run again automatically whenever the system is restarted. For example:
+
+  ```
+  $ nano /etc/systemd/system/nostream.service
+
+  # Note: replace "User=..." with your username, and
+  # "/home/nostr/nostream" with the directory where you cloned the repo.
+
+  [Unit]
+  Description=Nostr TS Relay
+  After=network.target
+  StartLimitIntervalSec=0
+
+  [Service]
+  Type=simple
+  Restart=always
+  RestartSec=5
+  User=nostr
+  WorkingDirectory=/home/nostr/nostream
+  ExecStart=/home/nostr/nostream/scripts/start
+  ExecStop=/home/nostr/nostream/scripts/stop
+
+  [Install]
+  WantedBy=multi-user.target
+  ```
+
+And then:
+
+  ```
+  systemctl enable nostream
+  systemctl start nostream
+  ```
+
+The logs can be viewed with:
+
+  ```
+  journalctl -u nostream
+  ```
 
 ## Quick Start (Standalone)
 
@@ -142,8 +187,8 @@ Start Redis and use `redis-cli` to set the default password and verify:
 
 Clone repository and enter directory:
   ```
-  git clone git@github.com:Cameri/nostr-ts-relay.git
-  cd nostr-ts-relay
+  git clone git@github.com:Cameri/nostream.git
+  cd nostream
   ```
 
 Install dependencies:
@@ -188,7 +233,7 @@ To clean up the build, coverage and test reports run:
 
 Open a terminal and change to the project's directory:
   ```
-  cd /path/to/nostr-ts-relay
+  cd /path/to/nostream
   ```
 
 Run unit tests with:
@@ -223,7 +268,7 @@ To see the unit tests coverage report open `.coverage/unit/lcov-report/index.htm
 
 Open a terminal and change to the project's directory:
   ```
-  cd /path/to/nostr-ts-relay
+  cd /path/to/nostream
   ```
 
 Run integration tests with:
@@ -242,7 +287,7 @@ And to get integration test coverage run:
 
 Open a terminal and change to the project's directory:
   ```
-  cd /path/to/nostr-ts-relay
+  cd /path/to/nostream
   ```
 
 Set the following environment variables:
@@ -284,7 +329,7 @@ To see the integration test coverage report open `.coverage/integration/lcov-rep
 
 You can change the default folder by setting the `NOSTR_CONFIG_DIR` environment variable to a different path.
 
-Run nostr-ts-relay using one of the quick-start guides at least once and `~/.nostr/settings.json` will be created.
+Run nostream using one of the quick-start guides at least once and `~/.nostr/settings.json` will be created.
 Any changes made to the settings file will be read on the next start.
 
 A sample settings file is included at the project root under the name `settings.sample.json`. Feel free to copy it to `~/.nostr/settings.json`

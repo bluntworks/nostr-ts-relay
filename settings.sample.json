@@ -1,10 +1,14 @@
 {
   "info": {
-    "relay_url": "wss://nostr-ts-relay.your-domain.com",
-    "name": "nostr-ts-relay.your-domain.com",
+    "relay_url": "wss://nostream.your-domain.com",
+    "name": "nostream.your-domain.com",
     "description": "A nostr relay written in Typescript.",
     "pubkey": "replace-with-your-pubkey",
     "contact": "operator@your-domain.com"
+  },
+  "network": {
+    "max_payload_size": 131072,
+    "remote_ip_header": "x-forwarded-for"
   },
   "workers": {
     "count": 0
@@ -69,7 +73,14 @@
           "period": 86400000,
           "rate": 2880
         }
-      ]
+      ],
+      "whitelists": {
+        "pubkeys": [],
+        "ipAddresses": [
+          "::1",
+          "::ffff:10.10.10.1"
+        ]
+      }
     },
     "client": {
       "subscription": {

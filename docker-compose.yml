@@ -11,12 +11,14 @@ services:
       DB_PASSWORD: nostr_ts_relay
       DB_NAME: nostr_ts_relay
       DB_MIN_POOL_SIZE: 16
-      DB_MAX_POOL_SIZE: 32
+      DB_MAX_POOL_SIZE: 64
       REDIS_HOST: cache
       REDIS_PORT: 6379
       REDIS_USER: default
       REDIS_PASSWORD: nostr_ts_relay
-      DEBUG: "worker:*"
+      # Enable DEBUG for troubleshooting. Examples:
+      # DEBUG: "worker:*"
+      # DEBUG: "knex:query"
     user: node:node
     volumes:
       - ${PWD}/.nostr:/home/node/

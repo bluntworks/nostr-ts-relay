@@ -18,7 +18,8 @@ export class WebServerAdapter extends EventEmitter implements IWebServerAdapter 
     super()
     this.webServer
       .on('request', this.onRequest.bind(this))
-      .on('clientError', this.onError.bind(this))
+      .on('error', this.onError.bind(this))
+      .on('clientError', this.onClientError.bind(this))
       .once('close', this.onClose.bind(this))
       .once('listening', this.onListening.bind(this))
   }
@@ -54,17 +55,23 @@ export class WebServerAdapter extends EventEmitter implements IWebServerAdapter 
       const body = JSON.stringify(relayInformationDocument)
       response.end(body)
     } else if (request.headers['upgrade'] !== 'connection') {
-      response.setHeader('content-type', 'application/text')
+      response.setHeader('content-type', 'text/plain')
       response.end('Please use a Nostr client to connect.')
     }
   }
 
-  private onError(error: Error, socket: Duplex) {
+  private onError(error: Error) {
+    debug('error: %o', error)
+
+    throw error
+  }
+
+  private onClientError(error: Error, socket: Duplex) {
     debug('socket error: %o', error)
     if (error['code'] === 'ECONNRESET' || !socket.writable) {
       return
     }
-    socket.end('HTTP/1.1 400 Bad Request\r\n\r\n')
+    socket.end('HTTP/1.1 400 Bad Request\r\nContent-Type: text/html\r\n')
   }
 
   protected onClose() {

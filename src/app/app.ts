@@ -29,17 +29,16 @@ export class App implements IRunnable {
 
   public run(): void {
     console.log(`
- ███▄    █ ▒█████    ██████ ▄▄▄█████▓ ██▀███       ▄▄▄█████▓ ██████       ██▀███  ▓█████  ██▓    ▄▄▄     ▓██   ██▓
- ██ ▀█   █▒██▒  ██▒▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒     ▓  ██▒ ▓▒██    ▒      ▓██ ▒ ██▒▓█   ▀ ▓██▒   ▒████▄    ▒██  ██▒
-▓██  ▀█ ██▒██░  ██▒░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒ ███ ▒ ▓██░ ▒░ ▓██▄    ███ ▓██ ░▄█ ▒▒███   ▒██░   ▒██  ▀█▄   ▒██ ██░
-▓██▒  ▐▌██▒██   ██░  ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄    ▒░ ░ ▓██▓ ░  ▒   ██▒  ▒░ ▒██▀▀█▄  ▒▓█  ▄ ▒██░   ░██▄▄▄▄██  ░ ▐██▓░
-▒██░   ▓██░ ████▓▒░▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒  ░    ▒██▒ ░▒██████▒▒  ░  ░██▓ ▒██▒░▒████▒░██████▒▓█   ▓██▒ ░ ██▒▓░
-░ ▒░   ▒ ▒░ ▒░▒░▒░ ▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░       ▒ ░░  ▒ ▒▓▒ ▒ ░     ░ ▒▓ ░▒▓░░░ ▒░ ░░ ▒░▓  ░▒▒   ▓▒█░  ██▒▒▒
-░ ░░   ░ ▒░ ░ ▒ ▒░ ░ ░▒  ░ ░    ░      ░▒ ░ ▒░         ░   ░ ░▒  ░ ░       ░▒ ░ ▒░ ░ ░  ░░ ░ ▒  ░ ▒   ▒▒ ░▓██ ░▒░
-   ░   ░ ░░ ░ ░ ▒  ░  ░  ░    ░        ░░   ░        ░     ░  ░  ░         ░░   ░    ░     ░ ░    ░   ▒   ▒ ▒ ░░
-         ░    ░ ░        ░              ░                        ░          ░        ░  ░    ░  ░     ░  ░░ ░
-                                                                                                          ░ ░`)
-    const width = 114
+ ███▄    █  ▒█████    ██████ ▄▄▄█████▓ ██▀███  ▓█████ ▄▄▄       ███▄ ▄███▓
+ ██ ▀█   █ ▒██▒  ██▒▒██    ▒ ▓  ██▒ ▓▒▓██ ▒ ██▒▓█   ▀▒████▄    ▓██▒▀█▀ ██▒
+▓██  ▀█ ██▒▒██░  ██▒░ ▓██▄   ▒ ▓██░ ▒░▓██ ░▄█ ▒▒███  ▒██  ▀█▄  ▓██    ▓██░
+▓██▒  ▐▌██▒▒██   ██░  ▒   ██▒░ ▓██▓ ░ ▒██▀▀█▄  ▒▓█  ▄░██▄▄▄▄██ ▒██    ▒██
+▒██░   ▓██░░ ████▓▒░▒██████▒▒  ▒██▒ ░ ░██▓ ▒██▒░▒████▒▓█   ▓██▒▒██▒   ░██▒
+░ ▒░   ▒ ▒ ░ ▒░▒░▒░ ▒ ▒▓▒ ▒ ░  ▒ ░░   ░ ▒▓ ░▒▓░░░ ▒░ ░▒▒   ▓▒█░░ ▒░   ░  ░
+░ ░░   ░ ▒░  ░ ▒ ▒░ ░ ░▒  ░ ░    ░      ░▒ ░ ▒░ ░ ░  ░ ▒   ▒▒ ░░  ░      ░
+   ░   ░ ░ ░ ░ ░ ▒  ░  ░  ░    ░        ░░   ░    ░    ░   ▒   ░      ░
+         ░     ░ ░        ░              ░        ░  ░     ░  ░       ░`)
+    const width = 74
     const logCentered = (input: string, width: number) => {
       const start = (width >> 1) - (input.length >> 1)
       console.log(' '.repeat(start), input)
@@ -47,14 +46,16 @@ export class App implements IRunnable {
     logCentered(`v${packageJson.version} by Cameri`, width)
     logCentered(`NIPs implemented: ${packageJson.supportedNips}`, width)
 
-    const workerCount = this.settingsFactory().workers?.count || cpus().length
+    const workerCount = process.env.WORKER_COUNT
+      ? Number(process.env.WORKER_COUNT)
+      : this.settingsFactory().workers?.count || cpus().length
 
     for (let i = 0; i < workerCount; i++) {
       debug('starting worker')
       this.cluster.fork()
     }
 
-    logCentered(`${workerCount} workers started`, 114)
+    logCentered(`${workerCount} workers started`, width)
 
     debug('settings: %O', this.settingsFactory())
   }
@@ -82,7 +83,7 @@ export class App implements IRunnable {
   }
 
   private onExit() {
-    debug('exiting')
+    console.log('exiting')
     this.process.exit(0)
   }
 }

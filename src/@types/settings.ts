@@ -9,6 +9,11 @@ export interface Info {
   contact?: string
 }
 
+export interface Network {
+  max_payload_size?: number
+  remote_ip_header?: string
+}
+
 export interface EventIdLimits {
   minLeadingZeroBits?: number
 }
@@ -47,6 +52,11 @@ export interface ContentLimits {
   maxLength?: number
 }
 
+export interface EventWhitelists {
+  pubkeys?: Pubkey[]
+  ipAddresses?: string[]
+}
+
 export interface EventLimits {
   eventId?: EventIdLimits
   pubkey?: PubkeyLimits
@@ -54,6 +64,7 @@ export interface EventLimits {
   createdAt?: CreatedAtLimits
   content?: ContentLimits
   rateLimits?: EventRateLimit[]
+  whitelists?: EventWhitelists
 }
 
 export interface ClientSubscriptionLimits {
@@ -87,6 +98,7 @@ export interface Worker {
 
 export interface ISettings {
   info: Info
+  network?: Network
   workers?: Worker
   limits?: Limits
 }
